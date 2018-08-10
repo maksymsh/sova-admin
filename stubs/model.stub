@@ -1,0 +1,41 @@
+<?php
+
+namespace DummyNamespace;
+
+use Illuminate\Database\Eloquent\Model;
+use Sova\Admin\Models\Traits\Activable;
+use Sova\Admin\Models\Traits\Mediable;
+use Sova\Admin\Models\Traits\Nestable;
+use Sova\Admin\Models\Traits\Sluggable;
+use Sova\Admin\Models\Traits\Sortable;
+use Sova\Admin\Models\Traits\Translatable;
+
+class DummyClass extends Model
+{
+    DummyTraits
+    DummyTimestamps
+    DummyFillable
+    DummyTranslatable
+
+    /*------------------ Relations ------------------*/
+    DummyRelations
+    /*------------------ Relations ------------------*/
+
+
+
+    /*------------------ Mutators ------------------*/
+    DummyMutators
+    /*------------------ Mutators ------------------*/
+
+
+
+    /*------------------ Scopes ------------------*/
+    DummyScopes
+    /*------------------ Scopes ------------------*/
+
+
+
+    /*------------------ Actions ------------------*/
+
+    /*------------------ Actions ------------------*/
+}

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sova\Cms\Models\Traits;
+namespace Sova\Admin\Models\Traits;
 
 use App\Models\Language;
 use App\Models\Translation;

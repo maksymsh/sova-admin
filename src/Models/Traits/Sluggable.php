@@ -1,6 +1,6 @@
 <?php
 
-namespace Sova\Cms\Models\Traits;
+namespace Sova\Admin\Models\Traits;
 
 trait Sluggable
 {

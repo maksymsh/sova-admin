@@ -2,7 +2,12 @@
 
 namespace Sova\Admin;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Sova\Admin\Console\InstallCommand;
+use Sova\Admin\Console\MigrationMakeCommand;
+use Sova\Admin\Console\ModelMakeCommand;
+use Sova\Admin\Http\Middleware\AdminMiddleware;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -15,12 +20,13 @@ class AdminServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-
+                InstallCommand::class,
+                ModelMakeCommand::class,
+                MigrationMakeCommand::class
             ]);
         }
 
-        $this->loadRoutesFrom(__DIR__.'/../routes/admin.php');
-        $this->loadMigrationsFrom(__DIR__.'/../migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'admin');
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'admin');
@@ -35,7 +41,18 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../resources/assets' => public_path('vendor/admin'),
-        ], 'public');
+        ], 'assets');
+
+        $this->publishes([
+            __DIR__.'/../database/seeds' => public_path('vendor/admin'),
+        ], 'seeds');
+
+
+        $this->app['router']->namespace('Admin')
+            ->middleware(AdminMiddleware::class)
+            ->prefix('admin')
+            ->as('admin::')
+            ->group(__DIR__.'/../routes/admin.php');
     }
 
     /**
