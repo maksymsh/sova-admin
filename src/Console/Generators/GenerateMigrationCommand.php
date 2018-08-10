@@ -37,17 +37,19 @@ class GenerateMigrationCommand extends BaseGeneratorCommand
 
                 if(array_key_exists('name', $params)){
 
-                    if($field['options']){
-                        $options = implode(', ', $field['options']);
-                        $schema .= "\$table->{$type}($options);\n\t\t\t";
+                    //$type = $params['name'];
+
+                    if($field['arguments']){
+                        $arguments = ', ' . implode(', ', $field['arguments']);
+                        $schema .= "\$table->{$type}('{$field['name']}' $arguments);\n\t\t\t";
                     } else {
-                        $schema .= "\$table->{$type}();\n\t\t\t";
+                        $schema .= "\$table->{$type}('{$field['name']}');\n\t\t\t";
                     }
 
                 } else {
-                    if($field['options']){
-                        $options = implode(', ', $field['options']);
-                        $schema .= "\$table->{$type}($options);\n\t\t\t";
+                    if($field['arguments']){
+                        $arguments = implode(', ', $field['arguments']);
+                        $schema .= "\$table->{$type}($arguments);\n\t\t\t";
                     } else {
                         $schema .= "\$table->{$type}();\n\t\t\t";
                     }
