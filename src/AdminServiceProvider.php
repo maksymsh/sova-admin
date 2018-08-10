@@ -4,9 +4,9 @@ namespace Sova\Admin;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Sova\Admin\Console\Generators\GenerateMigrationCommand;
+use Sova\Admin\Console\Generators\GenerateModelCommand;
 use Sova\Admin\Console\InstallCommand;
-use Sova\Admin\Console\MigrationMakeCommand;
-use Sova\Admin\Console\ModelMakeCommand;
 use Sova\Admin\Http\Middleware\AdminMiddleware;
 
 class AdminServiceProvider extends ServiceProvider
@@ -21,8 +21,8 @@ class AdminServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
-                ModelMakeCommand::class,
-                MigrationMakeCommand::class
+                GenerateModelCommand::class,
+                GenerateMigrationCommand::class
             ]);
         }
 

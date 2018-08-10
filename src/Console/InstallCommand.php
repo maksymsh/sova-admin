@@ -9,7 +9,7 @@ use Sova\Admin\Traits\Seedable;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Process\Process;
 
-class InstallCommand extends Command
+class InstallCommand extends BaseCommand
 {
     use Seedable;
 
