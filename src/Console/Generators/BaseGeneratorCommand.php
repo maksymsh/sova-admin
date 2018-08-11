@@ -78,6 +78,7 @@ abstract class BaseGeneratorCommand extends GeneratorCommand
     protected function parse($input)
     {
         $data = $this->option($input);
-        return $this->parser->parse($data);
+
+        return $data ? $this->parser->parse($data) : $data;
     }
 }

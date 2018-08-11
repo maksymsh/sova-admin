@@ -11,7 +11,7 @@ class GenerateModelCommand extends BaseGeneratorCommand
     protected $namespace = 'App\Models';
 
     protected $dummies = [
-        'DummyTimestamps', 'DummyTraits', 'DummyFillable', 'DummyTranslatable', //'DummyMutators', 'DummyScopes'
+        'DummyTimestamps', 'DummySoftDeletes', 'DummyTraits', 'DummyFillable', 'DummyTranslatable', //'DummyMutators', 'DummyScopes'
     ];
 
 
@@ -25,26 +25,41 @@ class GenerateModelCommand extends BaseGeneratorCommand
 
     protected function replaceTimestamps()
     {
-        $data = $this->parse('timestamps');
-        return "public \$timestamps = {$data};\n\t";
+        if($data = $this->option('timestamps')) {
+            return "public \$timestamps = true;\n\t";
+        }
+    }
+
+    protected function replaceSoftDeletes()
+    {
+        if($data = $this->option('softDeletes')) {
+            return "public \$softDeletes = true;\n\t";
+        }
     }
 
     protected function replaceTraits()
     {
-        $data = $this->parse('traits');
-        return "use ${data};\n\t";
+        if($data = $this->option('traits')){
+            return "use ${data};\n\t";
+        }
     }
 
     protected function replaceFillable()
     {
-        $data = $this->parse('fillable');
-        return "use ${data};\n\t";
+        if($data = $this->parse('fillable')){
+            $data = array_pluck($data, 'name');
+            $fillable = implode("', '", $data);
+            return "protected \$fillable = ['{$fillable}'];\n\t";
+        }
     }
 
     protected function replaceTranslatable()
     {
-        $data = $this->parse('translatable');
-        return "use ${data};\n\t";
+        if($data = $this->parse('translatable')){
+            $data = array_pluck($data, 'name');
+            $translatable = implode("', '", $data);
+            return "protected \$translatable = ['{$translatable}'];\n\t";
+        }
     }
 
     protected function replaceMutators(){
@@ -64,13 +79,15 @@ class GenerateModelCommand extends BaseGeneratorCommand
         return [
             ['timestamps', null, InputOption::VALUE_NONE, 'timestamps'],
 
-            ['traits', null, InputOption::VALUE_NONE, 'traits'],
+            ['softDeletes', null, InputOption::VALUE_NONE, 'softDeletes'],
 
-            ['fillable', null, InputOption::VALUE_NONE, 'fillable'],
+            ['traits', null, InputOption::VALUE_OPTIONAL, 'traits'],
 
-            ['translatable', null, InputOption::VALUE_NONE, 'translatable'],
+            ['fillable', null, InputOption::VALUE_OPTIONAL, 'fillable'],
 
-            ['data', null, InputOption::VALUE_NONE, 'data'],
+            ['translatable', null, InputOption::VALUE_OPTIONAL, 'translatable'],
+
+            ['data', null, InputOption::VALUE_OPTIONAL, 'data'],
 
             ['force', null, InputOption::VALUE_NONE, 'force'],
         ];

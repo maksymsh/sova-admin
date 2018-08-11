@@ -14,23 +14,24 @@ class DummyClass extends Model
 {
     DummyTraits
     DummyTimestamps
+    DummySoftDeletes
     DummyFillable
     DummyTranslatable
 
     /*------------------ Relations ------------------*/
-    DummyRelations
+
     /*------------------ Relations ------------------*/
 
 
 
     /*------------------ Mutators ------------------*/
-    DummyMutators
+
     /*------------------ Mutators ------------------*/
 
 
 
     /*------------------ Scopes ------------------*/
-    DummyScopes
+
     /*------------------ Scopes ------------------*/
 
 
