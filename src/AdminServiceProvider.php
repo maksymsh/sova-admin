@@ -7,6 +7,7 @@ use Illuminate\Support\ServiceProvider;
 use Sova\Admin\Console\Generators\GenerateMigrationCommand;
 use Sova\Admin\Console\Generators\GenerateModelCommand;
 use Sova\Admin\Console\InstallCommand;
+use Sova\Admin\Form\AdminForm;
 use Sova\Admin\Http\Middleware\AdminMiddleware;
 
 class AdminServiceProvider extends ServiceProvider
@@ -50,6 +51,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app['router']->namespace('Admin')
             ->middleware(AdminMiddleware::class)
+            ->namespace('Sova\Admin\Http\Controllers')
             ->prefix('admin')
             ->as('admin::')
             ->group(__DIR__.'/../routes/admin.php');
@@ -66,6 +68,14 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->singleton('admin', function () {
             return new Admin();
+        });
+
+        $this->app->singleton('admin-form', function () {
+            return new AdminForm();
+        });
+
+        $this->app->singleton('admin-resource', function () {
+            return new AdminResource();
         });
     }
 }
